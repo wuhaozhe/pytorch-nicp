@@ -1,6 +1,5 @@
 numpy>=1.16.4
 torch>=1.9
 sklearn>=0.24.2
-pytorch3d==0.6.0
 open3d==0.13.0
 matplotlib==3.4.3
