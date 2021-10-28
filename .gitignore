@@ -19,6 +19,12 @@ __pycache__/
 # Distribution / packaging
 .Python
 test_data/
+!test_data/pjanic.obj
+!test_data/pjanic.mtl
+!test_data/pjan.png
+!test_data/test2.ply
+!test_data/test2_lm.txt
+!.vim/doc/*
 build/
 develop-eggs/
 dist/

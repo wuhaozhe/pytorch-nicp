@@ -1,6 +1,7 @@
 import torch
 import io3d
 import render
+import numpy as np
 from utils import normalize_mesh, normalize_pcl
 from landmark import get_mesh_landmark
 from bfm_model import load_bfm_model
