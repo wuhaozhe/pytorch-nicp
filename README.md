@@ -19,7 +19,7 @@ pip install -r requirements.txt
 - For the template face model, currently we use a processed version of BFM face model from [3DMMfitting-pytorch](https://github.com/ascust/3DMM-Fitting-Pytorch), download the BFM09_model_info.mat from [3DMMfitting-pytorch](https://github.com/ascust/3DMM-Fitting-Pytorch) and put it into the ./BFM folder.
 - For demo, run 
 ```
-python demo.py
+python demo_nicp.py
 ```
 we show demo for NICP mesh2mesh and NICP mesh2pointcloud. 
 We have two param sets for registration:
