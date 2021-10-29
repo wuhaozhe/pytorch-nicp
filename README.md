@@ -32,6 +32,12 @@ Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. We
 | ![mesh2pointcloud](img/mesh2pointcloud.png) |
 |:--:| 
 | *Mesh2Pointcloud* |
+#### Notes
+The target mesh/pointcloud should face towards `z-axis` like the following picture. Meanwhile, the mesh/pointcloud must be normalized with `utils.normalize_mesh` or `utils.normalize_pcl` before fed into the nicp function.
+
+| ![](img/direction.png) |
+|:--:| 
+| *Direction* |
 
 ### Batchwise NICP
 We support batchwise NICP between meshes/pointclouds and the same template model. See `demo_nicp_batch.py` for more details.
