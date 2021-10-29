@@ -9,34 +9,22 @@ Additionally, we smooth the calculated mesh with laplacian smoothness term. With
 ------
 
 ### Quick Start
-#### install
+#### Install
 We use python3.8 and cuda10.2 for implementation. The code is tested on Ubuntu 20.04.
 - The pytorch3d **cannot** be installed directly from ```pip install pytorch3d```, for the installation of pytorch3d, please follow the instructions from [pytorch3d](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md).
 - For other packages, run
 ```
 pip install -r requirements.txt
 ```
-#### 
-- For the template face model, currently we use a processed version of BFM face model from [3DMMfitting-pytorch](https://github.com/ascust/3DMM-Fitting-Pytorch), download the BFM09_model_info.mat from [3DMMfitting-pytorch](https://github.com/ascust/3DMM-Fitting-Pytorch) and put it into the ./BFM folder.
+#### Demo
+- For the template face model, currently we use a processed version of BFM face model from [3DMMfitting-pytorch](https://github.com/ascust/3DMM-Fitting-Pytorch). Please download the BFM09_model_info.mat from [3DMMfitting-pytorch](https://github.com/ascust/3DMM-Fitting-Pytorch) and put it into the ./BFM folder.
 - For demo, run 
 ```
 python demo_nicp.py
 ```
-we show demo for NICP mesh2mesh and NICP mesh2pointcloud. 
-We have two param sets for registration:
-```
-milestones = set([50, 80, 100, 110, 120, 130, 140])
-stiffness_weights = np.array([50, 20, 5, 2, 0.8, 0.5, 0.35, 0.2])
-landmark_weights = np.array([5, 2, 0.5, 0, 0, 0, 0, 0])
-```
-This param set is used for registration on fine grained mesh
+Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. 
+We have two configuration files `./config/fine_grain.json`  and `./config/coarse_grain.json`, which is used respectively for `mesh2mesh` and `mesh2pointcloud` registration.
 
-```
-milestones = set([50, 100])
-stiffness_weights = np.array([50, 20, 5])
-landmark_weights = np.array([50, 20, 5])
-```
-This param set is used for registration on noisy point clouds
 
 
 ### Project Organization
