@@ -5,6 +5,7 @@ Preivous Non-rigid ICP algorithm is usually implemented on CPU, and needs to sol
 In this repo, we implement a pytorch version NICP algorithm based on paper [Amberg et al](https://gravis.dmi.unibas.ch/publications/2007/CVPR07_Amberg.pdf).
 Detailedly, we leverage the [AMSGrad](https://arxiv.org/abs/1904.09237) to optimize the linear regresssion, and then find nearest points iteratively.
 Additionally, we smooth the calculated mesh with laplacian smoothness term. With laplacian smoothness term, the wireframe is also more neat.
+Also, we support batchwise registration, in each batch, we can registering different meshes with the same template.
 
 ------
 
@@ -32,11 +33,5 @@ Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. We
 |:--:| 
 | *Mesh2Pointcloud* |
 
-
-### Project Organization
-
-### Templated Model
-You can also use your own templated face model with manually specified landmarks.
-
-### Todo
-Currently we write some batchwise functions, but batchwise NICP is not supported now. We will support batch NICP in further releases.
+### Batchwise NICP
+We support batchwise NICP between meshes/pointclouds and the same template model. See `demo_nicp_batch.py` for more details.
