@@ -22,9 +22,15 @@ pip install -r requirements.txt
 ```
 python demo_nicp.py
 ```
-Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. 
-We have two configuration files `./config/fine_grain.json`  and `./config/coarse_grain.json`, which is used respectively for `mesh2mesh` and `mesh2pointcloud` registration.
+Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. We have two configuration files `./config/fine_grain.json`  and `./config/coarse_grain.json`, which is used respectively for `mesh2mesh` and `mesh2pointcloud` registration. The `./config/fine_grain.json` has less stiffness constraints, which is suitable for registration on accurate scan. The `./config/coarse_grain.json` has less stiffness constraints, which is suitable for registration on noisy pointclouds. 
 
+| ![mesh2mesh](img/mesh2mesh.png) |
+|:--:| 
+| *Mesh2Mesh* |
+
+| ![mesh2pointcloud](img/mesh2pointcloud.png) |
+|:--:| 
+| *Mesh2Pointcloud* |
 
 
 ### Project Organization
