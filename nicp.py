@@ -60,6 +60,9 @@ def non_rigid_icp_mesh2pcl(
     template_vertex = template_mesh.verts_padded()
     target_vertex = target_pcl.points_padded()
 
+    #TODO: currently, batch NICP is not supported
+    assert target_vertex.shape[0] == 1
+
     boundary_mask = mesh_boundary(template_mesh.faces_padded()[0], template_vertex.shape[1])
     boundary_mask = boundary_mask.unsqueeze(0).unsqueeze(2)
     inner_mask = torch.logical_not(boundary_mask)

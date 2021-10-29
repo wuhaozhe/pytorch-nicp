@@ -20,6 +20,7 @@ def normalize_mesh(in_mesh: Meshes):
         input: Meshes object
         return: Meshes object, inverse transformation param
     '''
+    assert in_mesh.verts_padded().shape[0] == 1
     aabb = in_mesh.get_bounding_boxes()
     distance = aabb[:, :, 1] - aabb[:, :, 0]
     max_distance, _ = torch.max(distance, dim = 1)
@@ -32,6 +33,7 @@ def normalize_mesh(in_mesh: Meshes):
     return out_mesh, (offset, scale)
 
 def normalize_pcl(in_pcl: Pointclouds):
+    assert in_pcl.points_padded().shape[0] == 1
     aabb = in_pcl.get_bounding_boxes()
     distance = aabb[:, :, 1] - aabb[:, :, 0]
     max_distance, _ = torch.max(distance, dim = 1)

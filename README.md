@@ -40,4 +40,4 @@ The target mesh/pointcloud should face towards `z-axis` like the following pictu
 | *Direction* |
 
 ### Batchwise NICP
-We support batchwise NICP between meshes/pointclouds and the same template model. See `demo_nicp_batch.py` for more details.
+Currently we write some batchwise functions, but batchwise NICP is not supported now. We will support batch NICP in further releases.
