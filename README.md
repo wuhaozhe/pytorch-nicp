@@ -33,7 +33,7 @@ Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. We
 |:--:| 
 | *Mesh2Pointcloud* |
 #### Notes
-The target mesh/pointcloud should face towards `z-axis` like the following picture. Meanwhile, the mesh/pointcloud must be normalized with `utils.normalize_mesh` or `utils.normalize_pcl` before fed into the nicp function.
+The target mesh/pointcloud should face towards `z-axis` as shown in the following picture. Meanwhile, the mesh/pointcloud must be normalized with `utils.normalize_mesh` or `utils.normalize_pcl` before fed into the nicp function.
 
 | ![](img/direction.png) |
 |:--:| 
