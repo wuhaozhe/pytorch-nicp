@@ -29,17 +29,19 @@ def non_rigid_icp_mesh2mesh(
     target_mesh: Meshes, 
     template_lm_index: torch.LongTensor,
     target_lm_index: torch.LongTensor,
+    config: dict,
     device = torch.device('cuda:0')
 ):
     target_pcl = convert_mesh_to_pcl(target_mesh)
     pcl_normal = target_mesh.verts_normals_padded()
-    return non_rigid_icp_mesh2pcl(template_mesh, target_pcl, template_lm_index, target_lm_index, pcl_normal, device)
+    return non_rigid_icp_mesh2pcl(template_mesh, target_pcl, template_lm_index, target_lm_index, config, pcl_normal, device)
 
 def non_rigid_icp_mesh2pcl(
     template_mesh: Meshes, 
     target_pcl: Pointclouds, 
     template_lm_index: torch.LongTensor,
     target_lm_index: torch.LongTensor,
+    config: dict,
     pcl_normal: torch.FloatTensor = None,
     device = torch.device('cuda:0')
 ):
@@ -48,10 +50,8 @@ def non_rigid_icp_mesh2pcl(
 
         The template mesh and target pcl should be normalized with utils.normalize_mesh api. 
         The mesh should look at +z axis, the x define the width of mesh, and the y define the height of mesh
-
-        currently, the batchwise nicp is not supported
-        TODO: support batchwise nicp
     '''
+    
     template_mesh = template_mesh.to(device)
     target_pcl = target_pcl.to(device)
     template_lm_index = template_lm_index.to(device)
@@ -82,20 +82,15 @@ def non_rigid_icp_mesh2pcl(
     optimizer = torch.optim.AdamW([{'params': local_affine_model.parameters()}], lr=1e-4, amsgrad=True)
 
     # train param config
-    inner_iter = 50
-    outer_iter = 150
+    inner_iter = config['inner_iter']
+    outer_iter = config['outer_iter']
     loop = tqdm(range(outer_iter))
-    log_iter = 10
+    log_iter = config['log_iter']
 
-    # this param set is used for registration on fine grained mesh
-    # milestones = set([50, 80, 100, 110, 120, 130, 140])
-    # stiffness_weights = np.array([50, 20, 5, 2, 0.8, 0.5, 0.35, 0.2])
-    # landmark_weights = np.array([5, 2, 0.5, 0, 0, 0, 0, 0])
-
-    # this param set is used for registration on noisy points
-    milestones = set([50, 100])
-    stiffness_weights = np.array([50, 20, 5])
-    landmark_weights = np.array([50, 20, 5])
+    milestones = set(config['milestones'])
+    stiffness_weights = np.array(config['stiffness_weights'])
+    landmark_weights = np.array(config['landmark_weights'])
+    laplacian_weight = config['laplacian_weight']
     w_idx = 0
 
     # original 3d model
@@ -144,7 +139,7 @@ def non_rigid_icp_mesh2pcl(
             landmark_sum = torch.sum(landmark_distance) * landmark_weights[w_idx] / bsize
             stiffness = stiffness.view(bsize, -1)
             stiffness_sum = torch.sum(stiffness) * stiffness_weights[w_idx] / bsize
-            laplacian_loss = mesh_laplacian_smoothing(new_deform_mesh) * 250
+            laplacian_loss = mesh_laplacian_smoothing(new_deform_mesh) * laplacian_weight
             loss = torch.sqrt(vert_sum + landmark_sum + stiffness_sum) + laplacian_loss
             loss.backward()
             optimizer.step()

@@ -1,0 +1,9 @@
+{
+    "inner_iter": 50,
+    "outer_iter": 150,
+    "log_iter": 10,
+    "milestones": [50, 80, 100, 110, 120, 130, 140],
+    "stiffness_weights": [50, 20, 5, 2, 0.8, 0.5, 0.35, 0.2],
+    "landmark_weights": [5, 2, 0.5, 0, 0, 0, 0, 0],
+    "laplacian_weight": 250
+}
