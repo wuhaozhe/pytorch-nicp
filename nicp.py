@@ -43,7 +43,9 @@ def non_rigid_icp_mesh2pcl(
     target_lm_index: torch.LongTensor,
     config: dict,
     pcl_normal: torch.FloatTensor = None,
-    device = torch.device('cuda:0')
+    device = torch.device('cuda:0'),
+    out_affine = False,
+    in_affine = None
 ):
     '''
         deform template mesh to target pointclouds
@@ -81,7 +83,10 @@ def non_rigid_icp_mesh2pcl(
 
     # define the transformation model
     template_edges = template_mesh.edges_packed()
-    local_affine_model = LocalAffine(template_vertex.shape[1], template_vertex.shape[0], template_edges).to(device)
+    if in_affine is None:
+        local_affine_model = LocalAffine(template_vertex.shape[1], template_vertex.shape[0], template_edges).to(device)
+    else:
+        local_affine_model = in_affine
     optimizer = torch.optim.AdamW([{'params': local_affine_model.parameters()}], lr=1e-4, amsgrad=True)
 
     # train param config
@@ -115,7 +120,7 @@ def non_rigid_icp_mesh2pcl(
         close_points = knn_gather(target_sample_verts, knn.idx)[:, :, 0]
         # close_normals = knn_gather(pcl_normal, knn.idx)[:, :, 0]
 
-        if i == 0:
+        if (i == 0) and (in_affine is None):
             inner_loop = range(100)
         else:
             inner_loop = range(inner_iter)
@@ -163,4 +168,7 @@ def non_rigid_icp_mesh2pcl(
             w_idx += 1
 
     new_deform_mesh = template_mesh.update_padded(new_deformed_verts)
-    return new_deform_mesh
+    if out_affine:
+        return new_deform_mesh, local_affine_model
+    else:
+        return new_deform_mesh

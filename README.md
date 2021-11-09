@@ -25,6 +25,8 @@ python demo_nicp.py
 ```
 Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. We have two configuration files `./config/fine_grain.json`  and `./config/coarse_grain.json`, which is used respectively for `mesh2mesh` and `mesh2pointcloud` registration. The `./config/fine_grain.json` has less stiffness constraints, which is suitable for registration on accurate scan. The `./config/coarse_grain.json` has less stiffness constraints, which is suitable for registration on noisy pointclouds. 
 
+- We also provide a demo on 4D depth data, we provide a demo in `demo_4D.py`, also, we upload the example depth data in `test_data/depth_wuhz.mp4`, this data is collected from realsense L515. On average, each frame takes 2 seconds for processing.
+
 | ![mesh2mesh](img/mesh2mesh.png) |
 |:--:| 
 | *Mesh2Mesh* |
@@ -32,6 +34,8 @@ Then the NICP from mesh2mesh and NICP from mesh2pointcloud will be conducted. We
 | ![mesh2pointcloud](img/mesh2pointcloud.png) |
 |:--:| 
 | *Mesh2Pointcloud* |
+
+
 #### Notes
 The target mesh/pointcloud should face towards `z-axis` as shown in the following picture. Meanwhile, the mesh/pointcloud must be normalized with `utils.normalize_mesh` or `utils.normalize_pcl` before fed into the nicp function.
 
