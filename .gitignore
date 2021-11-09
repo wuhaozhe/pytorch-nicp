@@ -23,3 +23,4 @@ test_data/*
 !test_data/pjan.png
 !test_data/test2.ply
 !test_data/test2_lm.txt
+!test_data/depth_wuhz.mp4
